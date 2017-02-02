@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/vigetlabs/active_material.git
+  revision: c67d6854259baed79b35ec8413704ee3783582c8
+  specs:
+    active_material (1.4.1)
+
+GIT
   remote: https://github.com/activeadmin/activeadmin
   revision: a6c3e3782709b191931a5608b3a37a0ba5495999
   specs:
@@ -217,6 +223,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_material!
   activeadmin!
   byebug
   coffee-rails (~> 4.1.0)
