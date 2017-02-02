@@ -19,7 +19,7 @@ ActiveAdmin.register Task do
   filter :course_title
   filter :organization_title
   filter :owner_name
-  filter :task_type, as: :select, collection: ['review', 'submission']
+  filter :task_type, as: :select, collection: ['review', 'submission', 'metareview']
   filter :starts_at
   filter :ends_at
 
