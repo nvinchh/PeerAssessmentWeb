@@ -8,6 +8,9 @@ gem 'rails', '4.2.5'
 gem 'mysql2'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
+# Using bootstrap
+gem 'bootstrap-sass', '~> 3.2.0'
+gem 'autoprefixer-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
@@ -38,6 +41,8 @@ gem 'devise'
 gem 'activeadmin', git: 'https://github.com/activeadmin/activeadmin'
 
 gem 'active_material', github: 'vigetlabs/active_material'
+
+gem 'font-awesome-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
