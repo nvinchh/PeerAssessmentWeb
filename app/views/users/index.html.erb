@@ -240,7 +240,8 @@
   </script>
 </head>
 
-<body class="pace-done"><div class="pace  pace-inactive"><div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
+<body class="pace-done">
+<div class="pace  pace-inactive"><div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
   <div class="pace-progress-inner"></div>
 </div>
   <div class="pace-activity"></div></div>
@@ -272,7 +273,7 @@
               <div class="ibox-content">
                 <h5 class="m-b-md">Instructors</h5>
                 <h2 class="text-navy">
-                  <i class="fa fa-users"></i> 180
+                  <i class="fa fa-users"></i> <%= @aggregate_metrics[:num_instructors]%>
                 </h2>
 
               </div>
@@ -283,9 +284,8 @@
               <div class="ibox-content ">
                 <h5 class="m-b-md">Reviews</h5>
                 <h2 class="text-navy">
-                  <i class="fa fa-newspaper-o"></i> 100
+                  <i class="fa fa-newspaper-o"></i>  <%= @aggregate_metrics[:num_reviews]%>
                 </h2>
-                <small>Since 42 days ago</small>
               </div>
             </div>
           </div>
@@ -294,7 +294,7 @@
               <div class="ibox-content">
                 <h5 class="m-b-md">Students</h5>
                 <h2 class="text-danger">
-                  <i class="fa  fa-graduation-cap"></i> 220
+                  <i class="fa  fa-graduation-cap"></i>  <%= @aggregate_metrics[:num_students]%>
                 </h2>
 
               </div>
@@ -305,157 +305,567 @@
               <div class="ibox-content">
                 <h5 class="m-b-md">Submissions</h5>
                 <h2 class="text-danger">
-                  <i class="fa fa-pencil"></i> 270
+                  <i class="fa fa-pencil"></i>  <%= @aggregate_metrics[:num_submissions]%>
                 </h2>
-                <small>Since 4 days</small>
               </div>
             </div>
           </div>
 
         </div>
-    </div>
-    <div class="footer">
-      <div class="pull-right">
-        10GB of <strong>250GB</strong> Free.
-      </div>
-      <div>
-        <strong>Copyright</strong> Example Company © 2014-2017
       </div>
     </div>
+    <div class="wrapper wrapper-content">
+      <div class="row animated fadeInRight">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div class="ibox">
+              <div class="ibox-content">
+                <h5 class="m-b-md">Students</h5>
+                <div id="bargraph" style="width: 1100px;height:600px;"></div>
+                <script>
 
+
+                  var myChart = echarts.init(document.getElementById('bargraph'));
+
+                  // specify chart configuration item and data
+                  option = {
+                    timeline:{
+                      data:[
+                        '2003','2004','2005','2006', '2007','2008','2009','2010','2011'
+                      ],
+                      autoPlay : true,
+                      playInterval : 1000
+                    },
+                    options:[
+                      {
+                        title : {
+                          'text':'2002',
+                          'subtext':'2002subtext'
+                        },
+                        tooltip : {'trigger':'axis'},
+                        legend : {
+                          x:'center',
+                          'data':['Submissions','Reviews'],
+                          'selected':{
+                            'Submissions':true,
+                            'Reviews':true
+                          }
+                        },
+                        toolbox : {
+                          'show':true,
+                          orient : 'vertical',
+                          x: 'right',
+                          y: 'center',
+                          'feature':{
+                            'mark':{'show':true},
+                            'dataView':{'show':true,'readOnly':false},
+                            'magicType':{'show':true,'type':['line','bar','stack','tiled']},
+                            'restore':{'show':true},
+                            'saveAsImage':{'show':true}
+                          }
+                        },
+                        calculable : true,
+                        grid : {'y':80,'y2':100},
+                        xAxis : [{
+                          'type':'category',
+                          'axisLabel':{'interval':0},
+                          'data':[
+                            'Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept',
+                            'Oct','Nov','Dec'
+                          ]
+                        }],
+                        yAxis : [
+                          {
+                            'type':'value',
+                            'name':'Submissions'
+                          },
+                          {
+                            'type':'value',
+                            'name':'Reviews'
+                          }
+                        ],
+                        series : [
+                          {
+                            'name':'Submissions',
+                            'type':'bar',
+                            'markLine':{
+                              symbol : ['arrow','none'],
+                              symbolSize : [4, 2],
+                              itemStyle : {
+                                normal: {
+                                  lineStyle: {color:'orange'},
+                                  barBorderColor:'orange',
+                                  label:{
+                                    position:'left',
+                                    formatter:function(params){
+                                      return Math.round(params.value);
+                                    },
+                                    textStyle:{color:'orange'}
+                                  }
+                                }
+                              },
+                              'data':[{'type':'average','name':'Submissions'}]
+                            },
+                            'data': 1
+                          },
+                          {
+                            'name':'Reviews','yAxisIndex':1,'type':'bar',
+                            'data': 2
+                          }
+                        ]
+                      },
+                      {
+                        title : {'text':'2003'},
+                        series : [
+                          {'data': [13,44,20,12,1,5,8,9,7,9,3,11]},
+                          {'data': [31,15,82,19,21,24,31,17,25,17,9,76]}
+                        ]
+                      },
+                      {
+                        title : {'text':'2004'},
+                        series : [
+                          {'data': [43,16,17,24,12,43,12,54,13,43,17,12]},
+                          {'data': [24,51,65,72,13,54,34,12,65,23,14,75]}
+                        ]
+                      },
+                      {
+                        title : {'text':'2005'},
+                        series : [
+                          {'data': [14,5,1,12,41,65,12,24,73,14,53]},
+                          {'data': [12,43,54,12,65,78,99,43,53,14,53]}
+                        ]
+                      },
+                      {
+                        title : {'text':'2006'},
+                        series : [
+                          {'data': [17,23,43,56,11,33,64,76,23,41,56,60]},
+                          {'data': [24,51,65,72,13,54,34,12,65,23,14,75]}
+                        ]
+                      },
+                      {
+                        title : {'text':'2007'},
+                        series : [
+                          {'data': [12,43,54,12,65,78,99,43,53,14,53]},
+                          {'data': [13,44,20,12,1,5,8,9,7,9,3,11]}
+                        ]
+                      },
+                      {
+                        title : {'text':'2008'},
+                        series : [
+                          {'data': [24,51,65,72,13,54,34,12,65,23,14,75]},
+                          {'data': [43,16,17,24,12,43,12,54,13,43,17,12]}
+                        ]
+                      },
+                      {
+                        title : {'text':'2009'},
+                        series : [
+                          {'data': [13,44,20,12,1,5,8,9,7,9,3,11]},
+                          {'data': [31,15,82,19,21,24,31,17,25,17,9,76]}
+                        ]
+                      },
+                      {
+                        title : {'text':'2010'},
+                        series : [
+                          {'data': [13,44,20,12,1,5,8,9,7,9,3,11]},
+                          {'data': [12,43,54,12,65,78,99,43,53,14,53]}
+                        ]
+                      },
+                      {
+                        title : {'text':'2011'},
+                        series : [
+                          {'data': [31,15,82,19,21,24,31,17,25,17,9,76]},
+                          {'data': [24,51,65,72,13,54,34,12,65,23,14,75]}
+                        ]
+                      }
+                    ]
+                  };
+
+
+                  // use configuration item and data specified to show chart
+                  myChart.setOption(option);
+                </script>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="ibox">
+              <div class="ibox-content">
+                <h5 class="m-b-md">Students</h5>
+                <%= form_tag(course_review_pairs_distribution_users_path, remote: true, id: 'scorewise_review_pair') do %>
+                    <div class="form-group"><label class="col-sm-2 control-label">Course Title</label>
+
+                      <div class="col-sm-10"><select id="course_title" class="form-control m-b" name="course_title" required="true">
+                      </select>
+                      </div> </div>
+                    <div class="form-group"><label class="col-sm-2 control-label">Assignment Title</label>
+
+                      <div class="col-sm-10"><select id="assignment_title" class="form-control m-b" name="assignment_title">
+                      </select>
+                      </div> </div>
+                    <div class="form-group">
+                      <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Filter</strong></button>
+                    </div>
+                    <div class="form-group" style="height:625px">
+                      <div id="bargraph2" style="width: 700px;height:500px;"></div>
+                    </div>
+
+                <% end %>
+
+                <script>
+
+                  var selectData, $states;
+
+                  function updateSelects() {
+
+                    var cities = $.map(selectData[this.value], function (city) {
+                      return $("<option value="+ city[2]+"/>").text(city[1]);
+                    });
+                    $("#assignment_title").empty().append(cities);
+                  }
+
+
+                  var state;
+                  selectData = <%= @grouped_tasks.to_json.html_safe %>;
+                  $states = $("#course_title").on("change", updateSelects);
+                  for (state in selectData) {
+                    $("<option />").text(state).appendTo($states);
+                  }
+                  $states.change();
+
+
+                  var review_pair_scorewise_distribution = <%= @course_review_pairs_distribution.to_json.html_safe %>;
+                  var myChart2 = echarts.init(document.getElementById('bargraph2'));
+                  option2 = {
+                    title : {
+                      text: 'Score-wise No. of review - reviewee pair'
+                    },
+                    tooltip : {
+                      trigger: 'axis'
+                    },
+                    legend: {
+                      data:['# Review Pairs']
+                    },
+                    calculable : true,
+                    xAxis : [
+                      {
+                        type : 'category',
+                        boundaryGap : true,
+                        data : review_pair_scorewise_distribution.scores
+                      }
+                    ],
+                    yAxis : [
+                      {
+                        type : 'value'
+                      }
+                    ],
+                    series : [
+                      {
+                        name:'# review pairs',
+                        type:'bar',
+                        data: review_pair_scorewise_distribution.num_review_reviewee_pairs,
+                        markPoint : {
+                          data : [
+                            {type : 'max', name: 'Max'},
+                            {type : 'min', name: 'Min'}
+                          ]
+                        },
+                        markLine : {
+                          data : [
+                            {type : 'average', name: 'Average'}
+                          ]
+                        }
+                      }
+                    ]
+                  };
+
+                  // use configuration item and data specified to show chart
+                  myChart2.setOption(option2);
+                  //                  $("#scorewise_review_pair").on("ajax:success", (e, data, status, xhr){
+                  //
+                  //                  ).on("ajax:error", (e, xhr, status, error){
+                  //                  $("#scorewise_review_pair").append "<p>ERROR</p>";});
+
+                  $('#scorewise_review_pair button').click(function(event) {
+                    event.preventDefault();
+                    $.ajax({
+                      url: this.parentNode.parentNode.action,
+                      data: {
+                        course_title: $("#course_title").val(), assignment_title: $("#assignment_title").val()
+                      },
+                      success: function(data) {
+                        option2.series[0].data = data.num_review_reviewee_pairs;
+                        myChart2.setOption(option2);
+                      },
+                      error: function() {
+                      }
+                    });
+                  });
+                </script>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="ibox">
+              <div class="ibox-content">
+                <h5 class="m-b-md">Students</h5>
+                <%= form_tag(criterion_wise_score_distribution_users_path, remote: true, id: 'criterionwise_score') do %>
+                    <div class="form-group"><label class="col-sm-2 control-label">Course Title</label>
+
+                      <div class="col-sm-10"><select id="course_title_pie" class="form-control m-b" name="course_title" required="true">
+                      </select>
+                      </div> </div>
+                    <div class="form-group"><label class="col-sm-2 control-label">Assignment Title</label>
+
+                      <div class="col-sm-10"><select id="assignment_title_pie" class="form-control m-b" name="assignment_title">
+                      </select>
+                      </div> </div>
+                    <div class="form-group"><label class="col-sm-2 control-label">Criterion</label>
+
+                      <div class="col-sm-10"><select id="criterion" class="form-control m-b" name="criterion">
+                      </select>
+                      </div> </div>
+                    <div class="form-group">
+                      <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Filter</strong></button>
+                    </div>
+                    <div class="form-group" style="height:625px">
+                      <div id="bargraph3" style="width: 600px;height:500px;"></div>
+                    </div>
+
+                <% end %>
+
+                <script>
+                  var selectData, $states;
+
+                  function updateCriterions(){
+                    var title = this.options[this.selectedIndex].innerHTML;
+                    var id = this.value;
+                    $.ajax({
+                      url: '<%= criterion_for_task_criterions_path%>',
+                      data: {
+                        assignment_id: id, assignment_title: title
+                      },
+                      success: function(data) {
+
+                        var criterions = $.map(data,function(criterion){
+                          return $("<option value=" + criterion[1]+"/>").text(criterion[0])
+                        });
+                        $("#criterion").empty().append(criterions);
+                      },
+                      error: function() {
+                      }
+                    });
+
+                  }
+                  function updateAssignmentPie() {
+
+                    var cities = $.map(selectData[this.value], function (city) {
+                      return $("<option value="+ city[2]+"/>").text(city[1]);
+                    });
+                    $("#assignment_title_pie").empty().append(cities);
+                  }
+
+
+                  var state;
+                  selectData = <%= @grouped_tasks.to_json.html_safe %>;
+                  $courses = $("#course_title_pie").on("change", updateAssignmentPie);
+                  for (state in selectData) {
+                    $("<option />").text(state).appendTo($courses);
+                  }
+                  $courses.change();
+                  $assignments = $("#assignment_title_pie").on("change", updateCriterions);
+
+                  var criterion_score_frequency = <%= @criterion_score_frequency.to_json.html_safe %>;
+
+                  var myChart3 = echarts.init(document.getElementById('bargraph3'));
+                  // specify chart configuration item and data
+                  var option3 = {
+                    title : {
+                      text: 'Submissions',
+                      subtext: 'Last 10 days'
+                    },
+                    legend: {
+                      data: criterion_score_frequency.map(function(x) {
+                        return x["name"];
+                      }),
+                      top: 'bottom'
+                    },
+                    series : [
+                      {
+                        name: 'Reference Page',
+                        type: 'pie',
+                        radius: '45%',
+                        data: criterion_score_frequency
+                      }
+                    ]
+                  };
+
+
+                  // use configuration item and data specified to show chart
+                  myChart3.setOption(option3);
+
+                  $('#criterionwise_score button').click(function(event) {
+                    event.preventDefault();
+
+                    $.ajax({
+                      url: this.parentNode.parentNode.action,
+                      data: {
+                        course_title: $("#course_title_pie").val(), assignment_title: $("#assignment_title_pie").val(), criterion_id: $("#criterion").val()
+                      },
+                      success: function(data) {
+                        option3.series[0].data = data;
+                        option3.legend.data = data.map(function(x) {
+                          return x["name"];
+                        });
+                        myChart3.setOption(option3);
+                      },
+                      error: function() {
+                      }
+                    });
+                  });
+                </script>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
   </div>
-</div>
 
-<div class="theme-config">
-  <div class="theme-config-box">
-    <div class="spin-icon">
-      <i class="fa fa-cogs fa-spin"></i>
-    </div>
-    <div class="skin-setttings">
-      <div class="title">Configuration</div>
-      <div class="setings-item">
+  <div class="theme-config">
+    <div class="theme-config-box">
+      <div class="spin-icon">
+        <i class="fa fa-cogs fa-spin"></i>
+      </div>
+      <div class="skin-setttings">
+        <div class="title">Configuration</div>
+        <div class="setings-item">
                     <span>
                         Collapse menu
                     </span>
 
-        <div class="switch">
-          <div class="onoffswitch">
-            <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="collapsemenu">
-            <label class="onoffswitch-label" for="collapsemenu">
-              <span class="onoffswitch-inner"></span>
-              <span class="onoffswitch-switch"></span>
-            </label>
+          <div class="switch">
+            <div class="onoffswitch">
+              <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="collapsemenu">
+              <label class="onoffswitch-label" for="collapsemenu">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+              </label>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="setings-item">
+        <div class="setings-item">
                     <span>
                         Fixed sidebar
                     </span>
 
-        <div class="switch">
-          <div class="onoffswitch">
-            <input type="checkbox" name="fixedsidebar" class="onoffswitch-checkbox" id="fixedsidebar">
-            <label class="onoffswitch-label" for="fixedsidebar">
-              <span class="onoffswitch-inner"></span>
-              <span class="onoffswitch-switch"></span>
-            </label>
+          <div class="switch">
+            <div class="onoffswitch">
+              <input type="checkbox" name="fixedsidebar" class="onoffswitch-checkbox" id="fixedsidebar">
+              <label class="onoffswitch-label" for="fixedsidebar">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+              </label>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="setings-item">
+        <div class="setings-item">
                     <span>
                         Top navbar
                     </span>
 
-        <div class="switch">
-          <div class="onoffswitch">
-            <input type="checkbox" name="fixednavbar" class="onoffswitch-checkbox" id="fixednavbar">
-            <label class="onoffswitch-label" for="fixednavbar">
-              <span class="onoffswitch-inner"></span>
-              <span class="onoffswitch-switch"></span>
-            </label>
+          <div class="switch">
+            <div class="onoffswitch">
+              <input type="checkbox" name="fixednavbar" class="onoffswitch-checkbox" id="fixednavbar">
+              <label class="onoffswitch-label" for="fixednavbar">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+              </label>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="setings-item">
+        <div class="setings-item">
                     <span>
                         Top navbar v.2
                         <br>
                         <small>*Primary layout</small>
                     </span>
 
-        <div class="switch">
-          <div class="onoffswitch">
-            <input type="checkbox" name="fixednavbar2" class="onoffswitch-checkbox" id="fixednavbar2">
-            <label class="onoffswitch-label" for="fixednavbar2">
-              <span class="onoffswitch-inner"></span>
-              <span class="onoffswitch-switch"></span>
-            </label>
+          <div class="switch">
+            <div class="onoffswitch">
+              <input type="checkbox" name="fixednavbar2" class="onoffswitch-checkbox" id="fixednavbar2">
+              <label class="onoffswitch-label" for="fixednavbar2">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+              </label>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="setings-item">
+        <div class="setings-item">
                     <span>
                         Boxed layout
                     </span>
 
-        <div class="switch">
-          <div class="onoffswitch">
-            <input type="checkbox" name="boxedlayout" class="onoffswitch-checkbox" id="boxedlayout">
-            <label class="onoffswitch-label" for="boxedlayout">
-              <span class="onoffswitch-inner"></span>
-              <span class="onoffswitch-switch"></span>
-            </label>
+          <div class="switch">
+            <div class="onoffswitch">
+              <input type="checkbox" name="boxedlayout" class="onoffswitch-checkbox" id="boxedlayout">
+              <label class="onoffswitch-label" for="boxedlayout">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+              </label>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="setings-item">
+        <div class="setings-item">
                     <span>
                         Fixed footer
                     </span>
 
-        <div class="switch">
-          <div class="onoffswitch">
-            <input type="checkbox" name="fixedfooter" class="onoffswitch-checkbox" id="fixedfooter">
-            <label class="onoffswitch-label" for="fixedfooter">
-              <span class="onoffswitch-inner"></span>
-              <span class="onoffswitch-switch"></span>
-            </label>
+          <div class="switch">
+            <div class="onoffswitch">
+              <input type="checkbox" name="fixedfooter" class="onoffswitch-checkbox" id="fixedfooter">
+              <label class="onoffswitch-label" for="fixedfooter">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+              </label>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="title">Skins</div>
-      <div class="setings-item default-skin">
+        <div class="title">Skins</div>
+        <div class="setings-item default-skin">
                     <span class="skin-name ">
                          <a href="#" class="s-skin-0">
                              Default
                          </a>
                     </span>
-      </div>
-      <div class="setings-item blue-skin">
+        </div>
+        <div class="setings-item blue-skin">
                     <span class="skin-name ">
                         <a href="#" class="s-skin-1">
                             Blue light
                         </a>
                     </span>
-      </div>
-      <div class="setings-item yellow-skin">
+        </div>
+        <div class="setings-item yellow-skin">
                     <span class="skin-name ">
                         <a href="#" class="s-skin-3">
                             Yellow/Purple
                         </a>
                     </span>
-      </div>
-      <div class="setings-item ultra-skin">
+        </div>
+        <div class="setings-item ultra-skin">
                     <span class="skin-name ">
                         <a href="md_skin/" class="md-skin">
                             Material Design
                         </a>
                     </span>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </body></html>

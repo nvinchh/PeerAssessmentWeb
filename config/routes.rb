@@ -4,6 +4,18 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   root 'users#index'
 
+  resources :users do
+    get :course_review_pairs_distribution, :criterion_wise_score_distribution, on: :collection
+  end
+
+  resources :criterions do
+    get :criterion_for_task, on: :collection
+  end
+
+  resources :visualizations do
+    get :topology, on: :collection
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
