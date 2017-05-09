@@ -69,6 +69,7 @@ GEM
     bcrypt (3.1.11)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bootstrap-chosen-rails (0.0.4)
     bootstrap-sass (3.2.0.2)
       sass (~> 3.2)
     bourbon (4.2.7)
@@ -76,6 +77,10 @@ GEM
       thor (~> 0.19)
     builder (3.2.3)
     byebug (9.0.6)
+    chosen-rails (1.5.2)
+      coffee-rails (>= 3.2)
+      railties (>= 3.0)
+      sass-rails (>= 3.2)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.1.x)
@@ -232,8 +237,10 @@ DEPENDENCIES
   active_material!
   activeadmin!
   autoprefixer-rails
+  bootstrap-chosen-rails
   bootstrap-sass (~> 3.2.0)
   byebug
+  chosen-rails
   coffee-rails (~> 4.1.0)
   devise
   dotenv-rails

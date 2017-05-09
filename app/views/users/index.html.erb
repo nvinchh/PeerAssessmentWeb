@@ -9,6 +9,8 @@
   <!--<link href="font-awesome/css/font-awesome.css" rel="stylesheet">-->
   <!--<link href="css/animate.css" rel="stylesheet">-->
   <!--<link href="css/style.css" rel="stylesheet">-->
+  
+
   <script>
 
 
@@ -509,7 +511,7 @@
                       <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Filter</strong></button>
                     </div>
                     <div class="form-group" style="height:625px">
-                      <div id="bargraph2" style="width: 700px;height:500px;"></div>
+                      <div id="bargraph2" style="width: 600px;height:500px;"></div>
                     </div>
 
                 <% end %>
@@ -583,10 +585,7 @@
 
                   // use configuration item and data specified to show chart
                   myChart2.setOption(option2);
-                  //                  $("#scorewise_review_pair").on("ajax:success", (e, data, status, xhr){
-                  //
-                  //                  ).on("ajax:error", (e, xhr, status, error){
-                  //                  $("#scorewise_review_pair").append "<p>ERROR</p>";});
+
 
                   $('#scorewise_review_pair button').click(function(event) {
                     event.preventDefault();
@@ -725,6 +724,47 @@
                       }
                     });
                   });
+                </script>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div class="ibox">
+              <div class="ibox-content">
+                <h5 class="m-b-md">Comments volume distribution</h5>
+                <%= form_tag(comments_volume_criterions_path, remote: true, id: 'criterionwise_comments_volume') do %>
+                    <div class="form-group"><label class="col-sm-2 control-label">Course Title</label>
+
+                      <div class="col-sm-10"><select id="course_title_volume" class="form-control m-b" name="course_title" required="true">
+                      </select>
+                      </div> </div>
+                    <div class="form-group"><label class="col-sm-2 control-label">Assignment Title</label>
+
+                      <div class="col-sm-10"><select id="assignment_title_volume" class="form-control m-b" name="assignment_title">
+                      </select>
+                      </div> </div>
+                    <div class="form-group"><label class="col-sm-2 control-label">Criterion</label>
+
+                      <div class="col-sm-10"><select id="criterion_volume" class="form-control m-b" name="criterion", multiple="true", display= "none" data-placeholder="Choose different Criterions and Click Filter">
+                      </select>
+                      </div> </div>
+                    <div class="form-group"><label class="col-sm-2 control-label">Num of Students</label>
+
+                      <div class="col-sm-10"><input class="form-control" type="number" value="50" id="number_input">
+                      </div> </div>
+                    <div class="form-group">
+                      <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Filter</strong></button>
+                    </div>
+                    <div class="form-group" style="height:725px">
+                      <div id="bargraph4" style="width: 1100px;height:600px;"></div>
+                    </div>
+
+                <% end %>
+
+                <script>
+                  var criterion_volume_url = '<%= criterion_for_task_criterions_path%>';
                 </script>
               </div>
             </div>

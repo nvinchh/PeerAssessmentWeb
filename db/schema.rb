@@ -28,76 +28,72 @@ ActiveRecord::Schema.define(version: 20170131004754) do
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
-  create_table "actor", force: :cascade do |t|
-    t.string "role", limit: 63
-  end
-
-  create_table "actor_participant", id: false, force: :cascade do |t|
+  create_table "actor_participants", id: false, force: :cascade do |t|
     t.string "actor_id",       limit: 20, null: false
     t.string "participant_id", limit: 20, null: false
   end
 
-  add_index "actor_participant", ["participant_id"], name: "actor_participant_participant_id_idx", using: :btree
+  add_index "actor_participants", ["participant_id"], name: "actor_participant_participant_id_idx", using: :btree
 
-  create_table "answer", force: :cascade do |t|
-    t.string  "assessor_actor_id",    limit: 20
-    t.string  "assessee_actor_id",    limit: 20
-    t.string  "assessee_artifact_id", limit: 20
-    t.string  "criterion_id",         limit: 20
-    t.integer "evaluation_mode_id",   limit: 4
-    t.text    "comment",              limit: 4294967295
-    t.text    "comment2",             limit: 4294967295
-    t.integer "rank",                 limit: 4
-    t.float   "score",                limit: 24
-    t.string  "create_in_task_id",    limit: 20
+  create_table "actors", force: :cascade do |t|
+    t.string "role", limit: 63
   end
 
-  add_index "answer", ["assessee_actor_id"], name: "answer_actor_assessee_actor_id_idx", using: :btree
-  add_index "answer", ["assessee_artifact_id"], name: "answer_artifact_assessee_artifact_id_idx", using: :btree
-  add_index "answer", ["assessor_actor_id"], name: "answer_actor_assessor_actor_id_idx", using: :btree
-  add_index "answer", ["create_in_task_id"], name: "answer_task_create_in_task_id_idx", using: :btree
-  add_index "answer", ["criterion_id"], name: "answer_criterion_criterion_id_idx", using: :btree
-  add_index "answer", ["evaluation_mode_id"], name: "answer_eval_mode_evaluation_mode_id_idx", using: :btree
-
-  create_table "ar_internal_metadata", primary_key: "key", force: :cascade do |t|
-    t.string   "value",      limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+  create_table "answers", force: :cascade do |t|
+    t.string   "assessor_actor_id",    limit: 20
+    t.string   "assessee_actor_id",    limit: 20
+    t.string   "assessee_artifact_id", limit: 20
+    t.string   "criterion_id",         limit: 20
+    t.integer  "evaluation_mode_id",   limit: 4
+    t.text     "comment",              limit: 4294967295
+    t.text     "comment2",             limit: 4294967295
+    t.integer  "rank",                 limit: 4
+    t.float    "score",                limit: 24
+    t.string   "create_in_task_id",    limit: 20
+    t.datetime "submitted_at"
   end
 
-  create_table "artifact", force: :cascade do |t|
+  add_index "answers", ["assessee_actor_id"], name: "answer_actor_assessee_actor_id_idx", using: :btree
+  add_index "answers", ["assessee_artifact_id"], name: "answer_artifact_assessee_artifact_id_idx", using: :btree
+  add_index "answers", ["assessor_actor_id"], name: "answer_actor_assessor_actor_id_idx", using: :btree
+  add_index "answers", ["create_in_task_id"], name: "answer_task_create_in_task_id_idx", using: :btree
+  add_index "answers", ["criterion_id"], name: "answer_criterion_criterion_id_idx", using: :btree
+  add_index "answers", ["evaluation_mode_id"], name: "answer_eval_mode_evaluation_mode_id_idx", using: :btree
+
+  create_table "artifacts", force: :cascade do |t|
     t.text   "content",              limit: 4294967295
     t.text   "elaboration",          limit: 4294967295
     t.string "submitted_in_task_id", limit: 20
     t.string "context_case",         limit: 255
   end
 
-  add_index "artifact", ["submitted_in_task_id"], name: "artifact_task_submitted_in_task_idx", using: :btree
+  add_index "artifacts", ["submitted_in_task_id"], name: "artifact_task_submitted_in_task_idx", using: :btree
 
-  create_table "criterion", force: :cascade do |t|
+  create_table "criteria", force: :cascade do |t|
     t.text   "title",       limit: 4294967295
     t.text   "description", limit: 4294967295
     t.string "type",        limit: 63
     t.float  "min_score",   limit: 24
     t.float  "max_score",   limit: 24
+    t.float  "weight",      limit: 24
   end
 
-  create_table "eval_mode", force: :cascade do |t|
+  create_table "eval_modes", force: :cascade do |t|
     t.string "description", limit: 255
   end
 
-  create_table "item", id: false, force: :cascade do |t|
+  create_table "items", id: false, force: :cascade do |t|
     t.string "id",           limit: 20
     t.text   "content",      limit: 4294967295
     t.string "reference_id", limit: 20
     t.string "type",         limit: 63
   end
 
-  create_table "participant", force: :cascade do |t|
+  create_table "participants", force: :cascade do |t|
     t.string "app_name", limit: 255
   end
 
-  create_table "task", force: :cascade do |t|
+  create_table "tasks", force: :cascade do |t|
     t.string   "task_type",          limit: 63
     t.string   "task_description",   limit: 255
     t.datetime "starts_at"
@@ -130,13 +126,13 @@ ActiveRecord::Schema.define(version: 20170131004754) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  add_foreign_key "actor_participant", "actor", name: "actor_participant_actor_id"
-  add_foreign_key "actor_participant", "participant", name: "actor_participant_participant_id"
-  add_foreign_key "answer", "actor", column: "assessee_actor_id", name: "answer_actor_assessee_actor_id"
-  add_foreign_key "answer", "actor", column: "assessor_actor_id", name: "answer_actor_assessor_actor_id"
-  add_foreign_key "answer", "artifact", column: "assessee_artifact_id", name: "answer_artifact_assessee_artifact_id"
-  add_foreign_key "answer", "criterion", name: "answer_criterion_criterion_id"
-  add_foreign_key "answer", "eval_mode", column: "evaluation_mode_id", name: "answer_eval_mode_evaluation_mode_id"
-  add_foreign_key "answer", "task", column: "create_in_task_id", name: "answer_task_create_in_task_id"
-  add_foreign_key "artifact", "task", column: "submitted_in_task_id", name: "artifact_task_submitted_in_task"
+  add_foreign_key "actor_participants", "actors", name: "actor_participant_actor_id"
+  add_foreign_key "actor_participants", "participants", name: "actor_participant_participant_id"
+  add_foreign_key "answers", "actors", column: "assessee_actor_id", name: "answer_actor_assessee_actor_id"
+  add_foreign_key "answers", "actors", column: "assessor_actor_id", name: "answer_actor_assessor_actor_id"
+  add_foreign_key "answers", "artifacts", column: "assessee_artifact_id", name: "answer_artifact_assessee_artifact_id"
+  add_foreign_key "answers", "criteria", column: "criterion_id", name: "answer_criterion_criterion_id"
+  add_foreign_key "answers", "eval_modes", column: "evaluation_mode_id", name: "answer_eval_mode_evaluation_mode_id"
+  add_foreign_key "answers", "tasks", column: "create_in_task_id", name: "answer_task_create_in_task_id"
+  add_foreign_key "artifacts", "tasks", column: "submitted_in_task_id", name: "artifact_task_submitted_in_task"
 end

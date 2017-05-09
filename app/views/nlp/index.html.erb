@@ -220,7 +220,7 @@
     <%= render 'layouts/header' %>
     <div class="row wrapper border-bottom white-bg page-heading">
       <div class="col-lg-10">
-        <h2>Visualization</h2>
+        <h2>NLP</h2>
       </div>
       <div class="col-lg-2">
 
@@ -232,110 +232,69 @@
           <div class="col-md-8 col-md-offset-2">
             <div class="ibox">
               <div class="ibox-content">
-                <h5 class="m-b-md">Students</h5>
-                <div id="bargraph4" style="width: 1000px;height:600px;"></div>
-                <script src="http://echarts.baidu.com/build/dist/echarts-all.js"></script>
+                <h5 class="m-b-md">Tile Chart</h5>
+                <%= form_tag(change_tile_chart_nlp_index_path, remote: true, id: 'scorewise_review_pair') do %>
+                    <div class="form-group"><label class="col-sm-2 control-label">Course Title</label>
+
+                      <div class="col-sm-10"><select id="course_title" class="form-control m-b" name="course_title" required="true">
+                      </select>
+                      </div> </div>
+                    <div class="form-group"><label class="col-sm-2 control-label">Assignment Title</label>
+
+                      <div class="col-sm-10"><select id="assignment_title" class="form-control m-b" name="assignment_title">
+                      </select>
+                      </div> </div>
+                    <div class="form-group">
+                      <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Filter</strong></button>
+                    </div>
+
+                <% end %>
+                <iframe id = "frame" style="width:100%; height:800px "> <p>Something went wrong</p></iframe>
                 <script>
-                  var ctdata = <%= @datawarehouse_entity_topology.to_json.html_safe %>;
-                  var myChart4 = echarts.init(document.getElementById('bargraph4'));
+                  var selectData, $states;
 
-                  option = {
-                    title : {
-                      text: 'webkit内核依赖',
-                      subtext: '数据来自网络',
-                      x:'right',
-                      y:'bottom'
-                    },
-                    tooltip : {
-                      trigger: 'item',
-                      formatter : "{b}"
-                    },
-                    toolbox: {
-                      show : true,
-                      feature : {
-                        restore : {show: true},
-                        magicType: {
-                          show: true,
-                          type: ['force', 'chord'],
-                          option: {
-                            chord: {
-                              minRadius : 2,
-                              maxRadius : 10,
-                              ribbonType: false,
-                              itemStyle: {
-                                normal: {
-                                  label: {
-                                    show: true,
-                                    rotate: true
-                                  },
-                                  chordStyle: {
-                                    opacity: 0.2
-                                  }
-                                }
-                              }
-                            },
-                            force: {
-                              minRadius : 5,
-                              maxRadius : 8,
-                              itemStyle : {
-                                normal : {
-                                  label: {
-                                    show: false
-                                  },
-                                  linkStyle : {
-                                    opacity : 0.5
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        },
-                        saveAsImage : {show: true}
-                      }
-                    },
-                    legend : {
-                      data : ['Student', 'Instructor', 'Submission', 'Review'],
-                      orient : 'vertical',
-                      x : 'left'
-                    },
-                    noDataEffect: 'none',
-                    series :[{
-                      type: 'force',
-//                      type: 'graph',
-//                      layout: 'force',
-                      name: 'webkit-dep',
-                      itemStyle: {
-                        normal : {
-                          linkStyle : {
-                            opacity : 0.5
-                          }
-                        }
+                  function updateSelects() {
+
+                    var cities = $.map(selectData[this.value], function (city) {
+                      return $("<option value="+ city[2]+"/>").text(city[1]);
+                    });
+                    $("#assignment_title").empty().append(cities);
+                  }
+
+
+                  var state;
+                  selectData = <%= @grouped_tasks.to_json.html_safe %>;
+                  $states = $("#course_title").on("change", updateSelects);
+                  for (state in selectData) {
+                    $("<option />").text(state).appendTo($states);
+                  }
+                  $states.change();
+
+                  var tile_chart_link = <%= @str.to_json.html_safe %>;
+                  var iframe = $('#frame');
+                  iframe.attr('src', tile_chart_link);
+
+                  $('#scorewise_review_pair button').click(function(event) {
+                    event.preventDefault();
+                    $.ajax({
+                      url: this.parentNode.parentNode.action,
+                      data: {
+                        course_title: $("#course_title").val(), assignment_title: $("#assignment_title").val()
                       },
-                      categories: ctdata.categories,
-                      nodes: ctdata.nodes,
-                      links: ctdata.links,
-                      minRadius: 5,
-                      maxRadius: 8,
-                      gravity: 1.1,
-                      scaling: 1.1,
-                      steps: 20,
-                      large: true,
-                      useWorker: true,
-                      coolDown: 0.995,
-                      ribbonType: false
-                    }],
-                  };
-
-                  myChart4.setOption(option);
-                  myChart4.hideLoading();
+                      success: function(data) {
+                        var iframe = $('#frame');
+                        iframe.attr('src', data);
+                      },
+                      error: function() {
+                      }
+                    });
+                  });
                 </script>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-
     </div>
   </div>
 

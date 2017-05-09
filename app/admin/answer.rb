@@ -16,6 +16,7 @@ ActiveAdmin.register Answer do
   filter :comment
   filter :rank
   filter :score
+  filter :submitted_at
 
   form do |f|
     f.inputs "Answer Details" do

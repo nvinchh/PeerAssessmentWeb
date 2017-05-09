@@ -1,5 +1,4 @@
 class Task < ActiveRecord::Base
-  self.table_name = 'task'
   scope :submissions, -> { where(task_type: 'submission') }
   scope :reviews, -> { where(task_type: 'review') }
   has_many :answers, :foreign_key => 'create_in_task_id', :primary_key => 'id', :class_name => 'Answer'

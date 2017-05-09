@@ -9,11 +9,15 @@ Rails.application.routes.draw do
   end
 
   resources :criterions do
-    get :criterion_for_task, on: :collection
+    get :criterion_for_task, :comments_volume, on: :collection
   end
 
   resources :visualizations do
     get :topology, on: :collection
+  end
+
+  resources :nlp do
+    get :change_tile_chart, on: :collection
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
