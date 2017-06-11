@@ -323,7 +323,7 @@
             <div class="ibox">
               <div class="ibox-content">
                 <h5 class="m-b-md">Students</h5>
-                <div id="bargraph" style="width: 1100px;height:600px;"></div>
+                <div id="bargraph" style="width: 1000px;height:600px;"></div>
                 <script>
 
 
@@ -496,7 +496,7 @@
             <div class="ibox">
               <div class="ibox-content">
                 <h5 class="m-b-md">Students</h5>
-                <%= form_tag(course_review_pairs_distribution_users_path, remote: true, id: 'scorewise_review_pair') do %>
+                <%= form_tag(course_review_pairs_distribution_users_path, remote: true, id: 'scorewise_review_pair', style: 'height:150px;')  do %>
                     <div class="form-group"><label class="col-sm-2 control-label">Course Title</label>
 
                       <div class="col-sm-10"><select id="course_title" class="form-control m-b" name="course_title" required="true">
@@ -510,12 +510,10 @@
                     <div class="form-group">
                       <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Filter</strong></button>
                     </div>
-                    <div class="form-group" style="height:625px">
-                      <div id="bargraph2" style="width: 600px;height:500px;"></div>
-                    </div>
+
 
                 <% end %>
-
+                <div id="bargraph2" style="width: 600px;height:500px;"></div>
                 <script>
 
                   var selectData, $states;
@@ -610,7 +608,7 @@
             <div class="ibox">
               <div class="ibox-content">
                 <h5 class="m-b-md">Students</h5>
-                <%= form_tag(criterion_wise_score_distribution_users_path, remote: true, id: 'criterionwise_score') do %>
+                <%= form_tag(criterion_wise_score_distribution_users_path, remote: true, id: 'criterionwise_score', style: 'height:150px;') do %>
                     <div class="form-group"><label class="col-sm-2 control-label">Course Title</label>
 
                       <div class="col-sm-10"><select id="course_title_pie" class="form-control m-b" name="course_title" required="true">
@@ -629,12 +627,8 @@
                     <div class="form-group">
                       <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Filter</strong></button>
                     </div>
-                    <div class="form-group" style="height:625px">
-                      <div id="bargraph3" style="width: 600px;height:500px;"></div>
-                    </div>
-
                 <% end %>
-
+                <div id="bargraph3" style="width: 600px;height:500px;"></div>
                 <script>
                   var selectData, $states;
 
@@ -734,35 +728,38 @@
             <div class="ibox">
               <div class="ibox-content">
                 <h5 class="m-b-md">Comments volume distribution</h5>
-                <%= form_tag(comments_volume_criterions_path, remote: true, id: 'criterionwise_comments_volume') do %>
-                    <div class="form-group"><label class="col-sm-2 control-label">Course Title</label>
+                <%= form_tag(comments_volume_criterions_path, remote: true, id: 'criterionwise_comments_volume', style: 'height:200px;') do %>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Course Title</label>
+                      <div class="col-sm-10">
+                        <select id="course_title_volume" class="form-control m-b" name="course_title" required="true"></select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Assignment Title</label>
+                      <div class="col-sm-10">
+                        <select id="assignment_title_volume" class="form-control m-b" name="assignment_title"></select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Num of Students</label>
+                      <div class="col-sm-10">
+                        <input class="form-control" type="number" value="50" id="number_input">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Criterion</label>
+                      <div class="col-sm-10">
+                        <select id="criterion_volume" class="form-control m-b" name="criterion", multiple="true", display= "none" data-placeholder="Choose different Criterions and Click Filter"></select>
+                      </div>
+                    </div>
 
-                      <div class="col-sm-10"><select id="course_title_volume" class="form-control m-b" name="course_title" required="true">
-                      </select>
-                      </div> </div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Assignment Title</label>
-
-                      <div class="col-sm-10"><select id="assignment_title_volume" class="form-control m-b" name="assignment_title">
-                      </select>
-                      </div> </div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Criterion</label>
-
-                      <div class="col-sm-10"><select id="criterion_volume" class="form-control m-b" name="criterion", multiple="true", display= "none" data-placeholder="Choose different Criterions and Click Filter">
-                      </select>
-                      </div> </div>
-                    <div class="form-group"><label class="col-sm-2 control-label">Num of Students</label>
-
-                      <div class="col-sm-10"><input class="form-control" type="number" value="50" id="number_input">
-                      </div> </div>
                     <div class="form-group">
                       <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Filter</strong></button>
                     </div>
-                    <div class="form-group" style="height:725px">
-                      <div id="bargraph4" style="width: 1100px;height:600px;"></div>
-                    </div>
 
                 <% end %>
-
+                <div id="bargraph4" style="width: 1100px;height:600px;"></div>
                 <script>
                   var criterion_volume_url = '<%= criterion_for_task_criterions_path%>';
                 </script>
