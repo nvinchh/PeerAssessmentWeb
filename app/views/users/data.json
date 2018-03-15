@@ -1,0 +1,40 @@
+[{
+  "metadata":
+  {
+    "title": "Sample Graph JSON",
+    "primary_value_label": "rank average",
+    "values_label": "ranks",
+    "higher_values_better": "false",
+    "best_value_possible": 1,
+    "worst_value_possible": 5,
+    "y_axis_label": "Rank Average",
+    "x_axis_label": "Students",
+    "color_scheme": "5b",
+    "secondary_value_label": "variance",
+    "critic comparer flag": "no",
+    "self_assess_flag": "no"
+  },
+  "data":
+          [{
+            "first_name": "Jonathan",
+            "last_name": "Diaz",
+            "column_url": "http://localhost:3000/assignments/584/responses/42846/showcrit?crit_assignment_id=594",
+            "primary_value": 1.0,
+            "secondary_value": 0.0,
+            "values": [1, 1, 1, 1, 1]
+          }, {
+            "first_name": "Ryan",
+            "last_name": "Jones",
+            "column_url": "http://localhost:3000/assignments/584/responses/42130/showcrit?crit_assignment_id=594",
+            "primary_value": 1.1666666666666667,
+            "secondary_value": 0.0,
+            "values": [1, 1, 1, 1, 1, 2]
+            }, {
+            "first_name": "Keyaanna",
+            "last_name": "Pausch",
+            "column_url": "http://localhost:3000/assignments/584/responses/42201/showcrit?crit_assignment_id=594",
+            "primary_value": 1.6,
+            "secondary_value": 0.0,
+            "values": [0, 1, 1, 1, 2, 3]
+          }]
+}]

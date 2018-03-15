@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(version: 20170131004754) do
 
   create_table "tasks", force: :cascade do |t|
     t.string   "task_type",          limit: 63
-    t.string   "task_description",   limit: 255
+    t.text     "task_description",   limit: 65535
     t.datetime "starts_at"
     t.datetime "ends_at"
     t.string   "assignment_title",   limit: 255

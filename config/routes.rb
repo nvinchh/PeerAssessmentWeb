@@ -20,6 +20,13 @@ Rails.application.routes.draw do
     get :change_tile_chart, on: :collection
   end
 
+  get 'mailbox', to: 'users#mailbox'
+  get 'notifications', to: 'users#notifications'
+  #get 'metrics', to: ''
+  get 'contacts', to: 'users#contacts'
+
+  get 'data.json', to: 'users#data'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
